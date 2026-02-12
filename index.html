@@ -768,7 +768,10 @@
             const isUpcoming = course.isUpcoming;
 
             return (
-                <div className={`group bg-white dark:bg-card-dark/20 rounded-3xl border border-slate-200 dark:border-white/5 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 active:scale-[0.98] ${isUpcoming ? 'opacity-90' : ''} ${isNotified ? 'border-primary/40' : 'hover:border-primary/40'}`}>
+                <div
+                    onClick={() => !isUpcoming && onLaunch(course.id)}
+                    className={`group cursor-pointer bg-white dark:bg-card-dark/20 rounded-3xl border border-slate-200 dark:border-white/5 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 active:scale-[0.98] ${isUpcoming ? 'opacity-90' : ''} ${isNotified ? 'border-primary/40' : 'hover:border-primary/40'}`}
+                >
                     <div className="relative aspect-video overflow-hidden">
                         <img
                             alt={course.title}
@@ -1486,6 +1489,14 @@
         const Dashboard = ({ searchQuery, setSearchQuery, activeCategory, setActiveCategory, onLaunchCourse, onLaunchLesson, onNotify, notifiedCourses, completedCount, totalCount, notifications, setNotifications, userProfile, setUserProfile }) => {
             const navigate = useNavigate();
             const [isLoading, setIsLoading] = useState(false);
+            const coursesRef = React.useRef(null);
+
+            const handleCategoryClick = (catName) => {
+                setActiveCategory(catName);
+                if (coursesRef.current) {
+                    coursesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
 
             useEffect(() => {
                 setIsLoading(true);
@@ -1529,10 +1540,10 @@
                             {/* Visual Category Grid - Premium Edition */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                                 {[
-                                    { name: 'Desarrollo Web', label: 'Web Architect', icon: 'devicon-html5-plain', color: '#E34F26', bg: 'from-orange-600/20 to-red-600/5', description: 'Aprende las bases esenciales para crear sitios web desde cero.' },
-                                    { name: 'Frontend', label: 'Frontend Mastery', icon: 'devicon-react-original', color: '#61DAFB', bg: 'from-blue-400/20 to-cyan-500/5', description: 'Crea interfaces increíbles y dinámicas con las mejores herramientas.' },
-                                    { name: 'Backend', label: 'Backend Systems', icon: 'devicon-nodejs-plain', color: '#339933', bg: 'from-green-600/20 to-emerald-700/5', description: 'Domina el lado del servidor, bases de datos y la lógica del negocio.' },
-                                    { name: 'UI/UX', label: 'Design Strategy', icon: 'devicon-figma-plain', color: '#F24E1E', bg: 'from-pink-500/20 to-rose-600/5', description: 'Diseña experiencias visuales que enamoren a tus usuarios.' }
+                                    { name: 'Desarrollo Web', label: 'Web Architect', icon: 'devicon-html5-plain', color: '#E34F26', bg: 'from-orange-600/20 to-red-600/5', description: 'Aprende las bases esenciales para crear sitios web desde cero.', courseId: 1 },
+                                    { name: 'Frontend', label: 'Frontend Mastery', icon: 'devicon-react-original', color: '#61DAFB', bg: 'from-blue-400/20 to-cyan-500/5', description: 'Crea interfaces increíbles y dinámicas con las mejores herramientas.', courseId: 9 },
+                                    { name: 'Backend', label: 'Backend Systems', icon: 'devicon-nodejs-plain', color: '#339933', bg: 'from-green-600/20 to-emerald-700/5', description: 'Domina el lado del servidor, bases de datos y la lógica del negocio.', courseId: 8 },
+                                    { name: 'UI/UX', label: 'Design Strategy', icon: 'devicon-figma-plain', color: '#F24E1E', bg: 'from-pink-500/20 to-rose-600/5', description: 'Diseña experiencias visuales que enamoren a tus usuarios.', courseId: 14 }
                                 ].map((cat) => {
                                     const count = COURSES.filter(c =>
                                         cat.name === 'UI/UX'
@@ -1545,7 +1556,7 @@
                                     return (
                                         <button
                                             key={cat.name}
-                                            onClick={() => setActiveCategory(cat.name)}
+                                            onClick={() => handleCategoryClick(cat.name)}
                                             className={`group relative p-6 sm:p-8 rounded-[2rem] transition-all duration-500 text-left overflow-hidden shine-effect category-float ${isActive ? 'premium-border-active shadow-2xl shadow-primary/20 scale-[1.02]' : 'premium-border shadow-lg shadow-black/5 dark:shadow-none'}`}
                                         >
                                             {/* Background Accent */}
@@ -1592,7 +1603,7 @@
                                 })}
                             </div>
 
-                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6 border-b border-white/5 pb-8">
+                            <div ref={coursesRef} className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6 border-b border-white/5 pb-8 scroll-mt-24">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                                         <span className="material-icons-round text-primary text-2xl">
@@ -2867,5 +2878,3 @@
 
 </html>
 
-
-</html>
