@@ -1101,17 +1101,17 @@
                             <div className="h-8 w-px bg-slate-200 dark:bg-slate-800 hidden xs:block"></div>
                             <div
                                 onClick={() => setShowProfileModal(true)}
-                                className="flex items-center gap-3 cursor-pointer group hover:bg-primary/5 p-1 sm:p-1.5 sm:pr-4 rounded-2xl transition-all duration-300 border border-transparent hover:border-primary/20"
+                                className="flex items-center gap-2 sm:gap-3 cursor-pointer group hover:bg-primary/5 p-1 sm:p-1.5 sm:pr-4 rounded-2xl transition-all duration-300 border border-transparent hover:border-primary/20"
                             >
-                                <div className="text-right hidden md:block">
-                                    <p className="text-sm font-bold group-hover:text-primary transition-colors leading-tight">{userProfile.name}</p>
+                                <div className="text-right flex flex-col justify-center">
+                                    <p className="text-[10px] sm:text-sm font-bold group-hover:text-primary transition-colors leading-none mb-0.5 max-w-[80px] sm:max-w-none truncate">{userProfile.name}</p>
                                     {userProfile.nickname && (
-                                        <p className="text-[11px] text-primary/70 font-semibold italic leading-tight">@{userProfile.nickname}</p>
+                                        <p className="text-[8px] sm:text-[11px] text-primary/70 font-semibold italic leading-none max-w-[80px] sm:max-w-none truncate">@{userProfile.nickname}</p>
                                     )}
                                 </div>
-                                <div className="relative">
+                                <div className="relative flex-shrink-0">
                                     <img alt="Perfil" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-primary/20 group-hover:border-primary transition-all duration-300" src={userProfile.avatar} />
-                                    <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-background-light dark:border-background-dark"></div>
+                                    <div className="absolute -top-0.5 -right-0.5 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-400 rounded-full border-2 border-background-light dark:border-background-dark"></div>
                                 </div>
                             </div>
                         </div>
